@@ -6,5 +6,7 @@ Module::Build->new
       license         => 'artistic',
 	requires => {
 	'IPC::Cmd' =>'0.04'
-	}
+	},
+create_makefile_pl => 'passthrough',
+      sign =>1
     )->create_build_script;

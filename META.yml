@@ -1,0 +1,15 @@
+--- #YAML:1.0
+name: Net-IP-Route-Reject
+version: 0.1
+license: artistic
+distribution_type: module
+requires:
+  IPC::Run: 0.77
+recommends: {}
+build_requires: {}
+conflicts: {}
+provides:
+  IP::Route::Reject:
+    file: lib/Net/IP/Route/Reject.pm
+    version: 0.1
+generated_by: Module::Build version 0.21

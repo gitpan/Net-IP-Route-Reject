@@ -6,7 +6,7 @@ use CLASS;
 BEGIN {
 	use Exporter ();
 	use vars qw ($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
-	$VERSION     = 0.4;
+	$VERSION     = 0.5;
 	@ISA         = qw (Exporter);
 	#Give a hoot don't pollute, do not export more than needed by default
 	@EXPORT      = qw ();
@@ -63,7 +63,7 @@ LICENSE file included with this module.
 
 =head1 SEE ALSO
 
-perl(1),IPC::Run.
+perl(1),IPC::Cmd.
 
 =cut
 
@@ -129,23 +129,26 @@ sub del {
  Throws    : 
  Comments  : This is a private function to avoid checking for bogus operation types
 
-See Also   : IPC::Run
+See Also   : IPC::Cmd
 
 =cut
 
 ################################################## subroutine header end ##
 sub _reject {
-    my ($self,@parameters) = @_;
-    my @ipaddr = grep $ipv4regex, $parameters[1]; #strip out anything that doesn't belong in an ip addres
-    $_routecmd[1]=$parameters[0];
+    my ($self,$operation, $ip) = @_;
+    carp ("no ip address supplied") unless defined $ip;
+    my @ipaddr = grep $ipv4regex, $ip; #strip out anything that doesn't belong in an ip addres
+    carp ("unsupported operation") unless ($operation eq 'add' ) or ($operation eq 'del');
+    $_routecmd[1]=$operation;
     $_routecmd[2]=$ipaddr[0];
     
     unless (run(command => \@_routecmd, verbose =>0))
     {
-	my $errmesg = (scalar localtime)." failed to add reject route for ". $ipaddr[0]." (maybe its already listed?)\n ";
+	my $errmesg = (scalar localtime)." failed to add reject route for $ip (maybe its already listed?)\n ";
 	carp $errmesg;
     }
 }
+
 
 
 1; #this line is important and will help the module return a true value

@@ -5,6 +5,6 @@ Module::Build->new
     ( module_name     => 'Net::IP::Route::Reject',
       license         => 'artistic',
 	requires => {
-	'IPC::Run' =>'0.77'
+	'IPC::Cmd' =>'0.04'
 	}
     )->create_build_script;

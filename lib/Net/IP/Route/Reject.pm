@@ -6,7 +6,7 @@ use CLASS;
 BEGIN {
 	use Exporter ();
 	use vars qw ($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
-	$VERSION     = 0.2;
+	$VERSION     = 0.3;
 	@ISA         = qw (Exporter);
 	#Give a hoot don't pollute, do not export more than needed by default
 	@EXPORT      = qw ();
@@ -140,9 +140,9 @@ sub _reject {
     $_routecmd[1]=$parameters[0];
     $_routecmd[2]=$ipaddr[0];
     
-    unless (run(command => \@routecmd, verbose =>0))
+    unless (run(command => \@_routecmd, verbose =>0))
     {
-	my $errmesg = (scalar localtime)." failed to add reject route for $ipaddr (maybe its already listed?)\n ";
+	my $errmesg = (scalar localtime)." failed to add reject route for ". $ipaddr[0]." (maybe its already listed?)\n ";
 	carp $errmesg;
     }
 }

@@ -1,4 +1,3 @@
-
 package IP::Route::Reject;
 use strict;
 use Carp;
@@ -7,7 +6,7 @@ use CLASS;
 BEGIN {
 	use Exporter ();
 	use vars qw ($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
-	$VERSION     = 0.1;
+	$VERSION     = 0.2;
 	@ISA         = qw (Exporter);
 	#Give a hoot don't pollute, do not export more than needed by default
 	@EXPORT      = qw ();
@@ -136,10 +135,10 @@ See Also   : IPC::Run
 
 ################################################## subroutine header end ##
 sub _reject {
-    my ($self,%parameters) = @_;
-    @ipaddr = grep $ipv4regex, $message; #strip out anything that doesn't belong in an ip addres
-    $_routecmd[1]='add';
-    $_routecmd[2]=$ipaddr;
+    my ($self,@parameters) = @_;
+    my @ipaddr = grep $ipv4regex, $parameters[1]; #strip out anything that doesn't belong in an ip addres
+    $_routecmd[1]=$parameters[0];
+    $_routecmd[2]=$ipaddr[0];
     
     unless (run(command => \@routecmd, verbose =>0))
     {
